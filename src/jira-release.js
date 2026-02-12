@@ -14,7 +14,7 @@ async function run() {
     const domain = JiraConfig.JiraDomain
     // check if domain contains api.atlassian.com
     var restString = 'rest/api/3/version'
-    if ( domain.includes('api.atlassian.com') ) {
+    if ( domain.indexOd('api.atlassian.com') !== -1 ) {
       const cloud_id = core.getInput('cloud_id')
       restString = `ex/jira/${cloud_id}/rest/api/3/version`
     }
