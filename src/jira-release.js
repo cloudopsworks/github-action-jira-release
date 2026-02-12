@@ -3,6 +3,7 @@ import * as core from '@actions/core'
 
 import setFixVersion from './jira-issues-updater'
 import jiraClient from './jira-client'
+import JiraConfig from './config.js'
 
 async function run() {
   try {
@@ -10,11 +11,19 @@ async function run() {
 
     let jiraVersionName = `${context.repo.repo}-${tag_name.replace(/^v/, '')}`
 
+    const domain = JiraConfig.JiraDomain
+    // check if domain contains api.atlassian.com
+    var restString = 'rest/api/3/version'
+    if ( domain.includes('api.atlassian.com') ) {
+      const cloud_id = core.getInput('cloud_id')
+      restString = `ex/jira/${cloud_id}/rest/api/3/version`
+    }
+
     const data = await jiraClient
-      .post('rest/api/3/version', {
+      .post(restString, {
         json: {
           name: jiraVersionName,
-          projectId: core.getInput('project_id'),
+          projectId: parseInt(core.getInput('project_id')),
           description: name,
         },
       })
