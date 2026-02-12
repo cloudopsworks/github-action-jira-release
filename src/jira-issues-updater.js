@@ -11,6 +11,9 @@ import JiraConfig from './config.js'
 async function updateJiraTickets(tickets, jiraVersion) {
   const promises = tickets.map(async (t) => {
     const domain = JiraConfig.JiraDomain
+    // Print output
+    console.log(`Jira Domain: ${domain}`)
+    console.log(`Updating ticket ${t} with version ${jiraVersion}`)
     // check if domain contains api.atlassian.com
     var restString = `rest/api/3/issue/${t}`
     if ( domain.indexOf('api.atlassian.com') !== -1 ) {
