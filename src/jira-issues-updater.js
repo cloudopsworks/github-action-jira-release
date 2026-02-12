@@ -6,18 +6,19 @@
 
 import getJiraTicketsFromCommits from './github-api-client'
 import jiraClient from './jira-client'
-import JiraConfig from './config.js'
+import * as core from '@actions/core'
 
 async function updateJiraTickets(tickets, jiraVersion) {
   const promises = tickets.map(async (t) => {
-    const domain = JiraConfig.JiraDomain
+    const cloud_id = core.getInput('cloud_id')
     // Print output
-    console.log(`Jira Domain: ${domain}`)
+    console.log(`Cloud ID: ${cloud_id}`)
     console.log(`Updating ticket ${t} with version ${jiraVersion}`)
     // check if domain contains api.atlassian.com
-    var restString = `rest/api/3/issue/${t}`
-    if ( domain.indexOf('api.atlassian.com') !== -1 ) {
-      const cloud_id = core.getInput('cloud_id')
+    let restString = ''
+    if ( cloud_id === '' ) {
+      restString = `rest/api/3/issue/${t}`
+    } else {
       restString = `ex/jira/${cloud_id}/rest/api/3/issue/${t}`
     }
     try {
