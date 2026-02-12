@@ -10,11 +10,14 @@ inputs:
   project_key:
     description: 'Project key. Used to pick ticket ids from the commit messages'
     required: true
+  cloud_id:
+    description: 'Cloud ID of the Jira instance, it is required if ATLASSIAN_CLOUD_DOMAIN is api.atlassian.com'
+    required: false
 outputs:
   jira_release_id:
     description: 'Jira Release ID'
   jira_release_name:
     description: 'Jira Release Name'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
