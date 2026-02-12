@@ -11,8 +11,9 @@ async function run() {
     let jiraVersionName = `${context.repo.repo}-${tag_name.replace(/^v/, '')}`
 
     const cloud_id = core.getInput('cloud_id')
+    const project_id = parseInt(core.getInput('project_id'))
     // Print output
-    core.info(`Cloud ID: ${cloud_id}`)
+    core.info(`Creating Version - Name: ${name} - Version: ${jiraVersionName} - Project ID: ${project_id}`)
     let restString = ''
     if (cloud_id === '') {
       restString = 'rest/api/3/version'
@@ -24,7 +25,7 @@ async function run() {
       .post(restString, {
         json: {
           name: jiraVersionName,
-          projectId: parseInt(core.getInput('project_id')),
+          projectId: project_id,
           description: name,
         },
       })

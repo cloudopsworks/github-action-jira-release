@@ -43516,7 +43516,6 @@ async function updateJiraTickets(tickets, jiraVersion) {
   const promises = tickets.map(async (t) => {
     const cloud_id = getInput('cloud_id');
     // Print output
-    info(`Cloud ID: ${cloud_id}`);
     info(`Updating ticket ${t} with version ${jiraVersion}`);
     // check if domain contains api.atlassian.com
     let restString = '';
@@ -43567,8 +43566,9 @@ async function run() {
     let jiraVersionName = `${context.repo.repo}-${tag_name.replace(/^v/, '')}`;
 
     const cloud_id = getInput('cloud_id');
+    const project_id = parseInt(getInput('project_id'));
     // Print output
-    info(`Cloud ID: ${cloud_id}`);
+    info(`Creating Version - Name: ${name} - Version: ${jiraVersionName} - Project ID: ${project_id}`);
     let restString = '';
     if (cloud_id === '') {
       restString = 'rest/api/3/version';
@@ -43580,7 +43580,7 @@ async function run() {
       .post(restString, {
         json: {
           name: jiraVersionName,
-          projectId: parseInt(getInput('project_id')),
+          projectId: project_id,
           description: name,
         },
       })
