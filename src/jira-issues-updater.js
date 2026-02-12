@@ -12,8 +12,8 @@ async function updateJiraTickets(tickets, jiraVersion) {
   const promises = tickets.map(async (t) => {
     const cloud_id = core.getInput('cloud_id')
     // Print output
-    console.log(`Cloud ID: ${cloud_id}`)
-    console.log(`Updating ticket ${t} with version ${jiraVersion}`)
+    core.info(`Cloud ID: ${cloud_id}`)
+    core.info(`Updating ticket ${t} with version ${jiraVersion}`)
     // check if domain contains api.atlassian.com
     let restString = ''
     if ( cloud_id === '' ) {

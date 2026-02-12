@@ -12,7 +12,7 @@ async function run() {
 
     const cloud_id = core.getInput('cloud_id')
     // Print output
-    console.log(`Cloud ID: ${cloud_id}`)
+    core.info(`Cloud ID: ${cloud_id}`)
     let restString = ''
     if (cloud_id === '') {
       restString = 'rest/api/3/version'

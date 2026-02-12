@@ -32736,6 +32736,13 @@ function setFailed(message) {
 function error(message, properties = {}) {
     issueCommand('error', toCommandProperties(properties), message instanceof Error ? message.toString() : message);
 }
+/**
+ * Writes info to log with console.log.
+ * @param message info message
+ */
+function info(message) {
+    process.stdout.write(message + os.EOL);
+}
 
 /**
  * Fetches all commits which are in the latest release (compares last and second-to-last releases)
@@ -43509,8 +43516,8 @@ async function updateJiraTickets(tickets, jiraVersion) {
   const promises = tickets.map(async (t) => {
     const cloud_id = getInput('cloud_id');
     // Print output
-    console.log(`Cloud ID: ${cloud_id}`);
-    console.log(`Updating ticket ${t} with version ${jiraVersion}`);
+    info(`Cloud ID: ${cloud_id}`);
+    info(`Updating ticket ${t} with version ${jiraVersion}`);
     // check if domain contains api.atlassian.com
     let restString = '';
     if ( cloud_id === '' ) {
@@ -43561,7 +43568,7 @@ async function run() {
 
     const cloud_id = getInput('cloud_id');
     // Print output
-    console.log(`Cloud ID: ${cloud_id}`);
+    info(`Cloud ID: ${cloud_id}`);
     let restString = '';
     if (cloud_id === '') {
       restString = 'rest/api/3/version';
