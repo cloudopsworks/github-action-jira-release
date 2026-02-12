@@ -12,9 +12,11 @@ async function run() {
     let jiraVersionName = `${context.repo.repo}-${tag_name.replace(/^v/, '')}`
 
     const domain = JiraConfig.JiraDomain
+    // Print output
+    console.log(`Jira Domain: ${domain}`)
     // check if domain contains api.atlassian.com
     var restString = 'rest/api/3/version'
-    if ( domain.indexOf('api.atlassian.com') !== -1 ) {
+    if (domain.indexOf('api.atlassian.com') !== -1) {
       const cloud_id = core.getInput('cloud_id')
       restString = `ex/jira/${cloud_id}/rest/api/3/version`
     }
