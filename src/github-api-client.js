@@ -22,6 +22,7 @@ async function getJiraTicketsFromCommits() {
     per_page: 2,
   })
   const [latestTag, previousTag] = tags
+  core.info(`Fetching commits between ${previousTag.name} and ${latestTag.name}`)
 
   const [latestCommit, previousCommit] = await Promise.all([
     github.rest.repos.getCommit({
