@@ -33,6 +33,7 @@ async function run() {
 
     core.setOutput('jira_release_id', data ? data.id : '???')
     core.setOutput('jira_release_name', data ? data.name : '???')
+    core.debug(`Created Jira release with ID: ${data.id} and name: ${data.name}`)
 
     await setFixVersion(data.name)
   } catch (e) {
