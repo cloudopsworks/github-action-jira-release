@@ -49,6 +49,7 @@ async function updateJiraTickets(tickets, jiraVersion) {
 }
 
 async function setFixVersion(jiraVersion) {
+  core.info(`Looping over Jira tickets and setting Fix Version to ${jiraVersion}`)
   return getJiraTicketsFromCommits()
     .then((t) => updateJiraTickets(t, jiraVersion))
     .catch((e) => console.error(e))

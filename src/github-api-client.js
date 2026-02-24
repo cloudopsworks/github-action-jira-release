@@ -21,6 +21,7 @@ async function getJiraTicketsFromCommits() {
     ...defaultApiParams,
     per_page: 2,
   })
+  core.info(`Got a total of ${tags.length} tags`)
   const [latestTag, previousTag] = tags
   core.info(`Fetching commits between ${previousTag.name} and ${latestTag.name}`)
 
