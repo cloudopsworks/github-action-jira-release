@@ -36,10 +36,14 @@ async function getJiraTicketsFromCommits() {
     }),
   ])
 
+  core.info(`Fetched latest and previous commits, since: ${previousCommit.data.commit.committer.date}, until: ${latestCommit.data.commit.committer.date}`)
+
   // We are shifting the last commit's date one second, so to not include the commit from the previous tag
   const since = new Date(
     new Date(previousCommit.data.commit.committer.date).valueOf() + 1000
   ).toISOString()
+
+  core.info(`Shifted commits to: commits since: ${since}, until: ${latestCommit.data.commit.committer.date}`)
 
   const commits = await github.rest.repos.listCommits({
     ...defaultApiParams,
@@ -49,6 +53,9 @@ async function getJiraTicketsFromCommits() {
 
   const jiraTickets = commits.data
     .map((c) => {
+      core.info(
+        `Processing commit: ${c.sha} with message: ${c.commit.message} with regex.`
+      )
       const regexMatches = jiraTicketRegex.exec(c.commit.message) || []
 
       return regexMatches[1]
